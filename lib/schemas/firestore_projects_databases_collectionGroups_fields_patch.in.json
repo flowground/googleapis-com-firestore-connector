@@ -1,0 +1,137 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "required": true,
+            "type": "string"
+        },
+        "updateMask": {
+            "type": "string"
+        },
+        "alt": {
+            "type": "string",
+            "enum": [
+                "json",
+                "media",
+                "proto"
+            ],
+            "default": "json"
+        },
+        "callback": {
+            "type": "string"
+        },
+        "fields": {
+            "type": "string"
+        },
+        "key": {
+            "type": "string"
+        },
+        "oauth_token": {
+            "type": "string"
+        },
+        "prettyPrint": {
+            "type": "boolean",
+            "default": true
+        },
+        "quotaUser": {
+            "type": "string"
+        },
+        "uploadType": {
+            "type": "string"
+        },
+        "upload_protocol": {
+            "type": "string"
+        },
+        "requestBody": {
+            "description": "Represents a single field in the database.\n\nFields are grouped by their \"Collection Group\", which represent all\ncollections in the database with the same id.",
+            "properties": {
+                "indexConfig": {
+                    "description": "The index configuration for this field. If unset, field indexing will\nrevert to the configuration defined by the `ancestor_field`. To\nexplicitly remove all indexes for this field, specify an index config\nwith an empty list of indexes.",
+                    "properties": {
+                        "ancestorField": {
+                            "description": "Output only.\nSpecifies the resource name of the `Field` from which this field's\nindex configuration is set (when `uses_ancestor_config` is true),\nor from which it *would* be set if this field had no index configuration\n(when `uses_ancestor_config` is false).",
+                            "type": "string"
+                        },
+                        "indexes": {
+                            "description": "The indexes supported for this field.",
+                            "items": {
+                                "description": "Cloud Firestore indexes enable simple and complex queries against\ndocuments in a database.",
+                                "properties": {
+                                    "fields": {
+                                        "description": "The fields supported by this index.\n\nFor composite indexes, this is always 2 or more fields.\nThe last field entry is always for the field path `__name__`. If, on\ncreation, `__name__` was not specified as the last field, it will be added\nautomatically with the same direction as that of the last field defined. If\nthe final field in a composite index is not directional, the `__name__`\nwill be ordered ASCENDING (unless explicitly specified).\n\nFor single field indexes, this will always be exactly one entry with a\nfield path equal to the field path of the associated field.",
+                                        "items": {
+                                            "description": "A field in an index.\nThe field_path describes which field is indexed, the value_mode describes\nhow the field value is indexed.",
+                                            "properties": {
+                                                "arrayConfig": {
+                                                    "description": "Indicates that this field supports operations on `array_value`s.",
+                                                    "enum": [
+                                                        "ARRAY_CONFIG_UNSPECIFIED",
+                                                        "CONTAINS"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "fieldPath": {
+                                                    "description": "Can be __name__.\nFor single field indexes, this must match the name of the field or may\nbe omitted.",
+                                                    "type": "string"
+                                                },
+                                                "order": {
+                                                    "description": "Indicates that this field supports ordering by the specified order or\ncomparing using =, <, <=, >, >=.",
+                                                    "enum": [
+                                                        "ORDER_UNSPECIFIED",
+                                                        "ASCENDING",
+                                                        "DESCENDING"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "name": {
+                                        "description": "Output only.\nA server defined name for this index.\nThe form of this name for composite indexes will be:\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{composite_index_id}`\nFor single field indexes, this field will be empty.",
+                                        "type": "string"
+                                    },
+                                    "queryScope": {
+                                        "description": "Indexes with a collection query scope specified allow queries\nagainst a collection that is the child of a specific document, specified at\nquery time, and that has the same collection id.\n\nIndexes with a collection group query scope specified allow queries against\nall collections descended from a specific document, specified at query\ntime, and that have the same collection id as this index.",
+                                        "enum": [
+                                            "QUERY_SCOPE_UNSPECIFIED",
+                                            "COLLECTION"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "description": "Output only.\nThe serving state of the index.",
+                                        "enum": [
+                                            "STATE_UNSPECIFIED",
+                                            "CREATING",
+                                            "READY",
+                                            "NEEDS_REPAIR"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "reverting": {
+                            "description": "Output only\nWhen true, the `Field`'s index configuration is in the process of being\nreverted. Once complete, the index config will transition to the same\nstate as the field specified by `ancestor_field`, at which point\n`uses_ancestor_config` will be `true` and `reverting` will be `false`.",
+                            "type": "boolean"
+                        },
+                        "usesAncestorConfig": {
+                            "description": "Output only.\nWhen true, the `Field`'s index configuration is set from the\nconfiguration specified by the `ancestor_field`.\nWhen false, the `Field`'s index configuration is defined explicitly.",
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "description": "A field name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_path}`\n\nA field path may be a simple field name, e.g. `address` or a path to fields\nwithin map_value , e.g. `address.city`,\nor a special field path. The only valid special field is `*`, which\nrepresents any field.\n\nField paths may be quoted using ` (backtick). The only character that needs\nto be escaped within a quoted field path is the backtick character itself,\nescaped using a backslash. Special characters in field paths that\nmust be quoted include: `*`, `.`,\n``` (backtick), `[`, `]`, as well as any ascii symbolic characters.\n\nExamples:\n(Note: Comments here are written in markdown syntax, so there is an\n additional layer of backticks to represent a code block)\n`\\`address.city\\`` represents a field named `address.city`, not the map key\n`city` in the field `address`.\n`\\`*\\`` represents a field named `*`, not any field.\n\nA special `Field` contains the default indexing settings for all fields.\nThis field's resource name is:\n`projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*`\nIndexes defined on this `Field` will be applied to all fields which do not\nhave their own `Field` index configuration.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    }
+}

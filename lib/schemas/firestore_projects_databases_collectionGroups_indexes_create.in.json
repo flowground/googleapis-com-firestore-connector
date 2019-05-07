@@ -1,0 +1,105 @@
+{
+    "type": "object",
+    "properties": {
+        "parent": {
+            "required": true,
+            "type": "string"
+        },
+        "access_token": {
+            "type": "string"
+        },
+        "alt": {
+            "type": "string",
+            "enum": [
+                "json",
+                "media",
+                "proto"
+            ],
+            "default": "json"
+        },
+        "callback": {
+            "type": "string"
+        },
+        "fields": {
+            "type": "string"
+        },
+        "key": {
+            "type": "string"
+        },
+        "oauth_token": {
+            "type": "string"
+        },
+        "prettyPrint": {
+            "type": "boolean",
+            "default": true
+        },
+        "quotaUser": {
+            "type": "string"
+        },
+        "uploadType": {
+            "type": "string"
+        },
+        "upload_protocol": {
+            "type": "string"
+        },
+        "requestBody": {
+            "description": "Cloud Firestore indexes enable simple and complex queries against\ndocuments in a database.",
+            "properties": {
+                "fields": {
+                    "description": "The fields supported by this index.\n\nFor composite indexes, this is always 2 or more fields.\nThe last field entry is always for the field path `__name__`. If, on\ncreation, `__name__` was not specified as the last field, it will be added\nautomatically with the same direction as that of the last field defined. If\nthe final field in a composite index is not directional, the `__name__`\nwill be ordered ASCENDING (unless explicitly specified).\n\nFor single field indexes, this will always be exactly one entry with a\nfield path equal to the field path of the associated field.",
+                    "items": {
+                        "description": "A field in an index.\nThe field_path describes which field is indexed, the value_mode describes\nhow the field value is indexed.",
+                        "properties": {
+                            "arrayConfig": {
+                                "description": "Indicates that this field supports operations on `array_value`s.",
+                                "enum": [
+                                    "ARRAY_CONFIG_UNSPECIFIED",
+                                    "CONTAINS"
+                                ],
+                                "type": "string"
+                            },
+                            "fieldPath": {
+                                "description": "Can be __name__.\nFor single field indexes, this must match the name of the field or may\nbe omitted.",
+                                "type": "string"
+                            },
+                            "order": {
+                                "description": "Indicates that this field supports ordering by the specified order or\ncomparing using =, <, <=, >, >=.",
+                                "enum": [
+                                    "ORDER_UNSPECIFIED",
+                                    "ASCENDING",
+                                    "DESCENDING"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "description": "Output only.\nA server defined name for this index.\nThe form of this name for composite indexes will be:\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{composite_index_id}`\nFor single field indexes, this field will be empty.",
+                    "type": "string"
+                },
+                "queryScope": {
+                    "description": "Indexes with a collection query scope specified allow queries\nagainst a collection that is the child of a specific document, specified at\nquery time, and that has the same collection id.\n\nIndexes with a collection group query scope specified allow queries against\nall collections descended from a specific document, specified at query\ntime, and that have the same collection id as this index.",
+                    "enum": [
+                        "QUERY_SCOPE_UNSPECIFIED",
+                        "COLLECTION"
+                    ],
+                    "type": "string"
+                },
+                "state": {
+                    "description": "Output only.\nThe serving state of the index.",
+                    "enum": [
+                        "STATE_UNSPECIFIED",
+                        "CREATING",
+                        "READY",
+                        "NEEDS_REPAIR"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    }
+}
